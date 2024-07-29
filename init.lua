@@ -11,9 +11,8 @@ Plug('nvim-telescope/telescope.nvim')
 -- ColorSchemes
 Plug('folke/tokyonight.nvim')
 Plug('catppuccin/nvim', { ['as'] = 'catpuccin' })
-Plug('NLKNguyen/papercolor-theme')
-Plug('0xstepit/flow.nvim')
 Plug('Shatur/neovim-ayu')
+Plug('Mofiqul/vscode.nvim')
 
 -- Lualine
 Plug('nvim-lualine/lualine.nvim')
@@ -92,9 +91,8 @@ vim.opt.termguicolors = true
 --vim.cmd[[colorscheme tokyonight-night]]
 --vim.cmd[[colorscheme catppuccin-mocha]]
 --require("catppuccin").setup()
---vim.cmd[[colorscheme PaperColor]]
---vim.cmd[[colorscheme flow]]
-vim.cmd[[colorscheme ayu-dark]]
+--vim.cmd[[colorscheme ayu-dark]]
+vim.cmd[[colorscheme vscode]]
 
 -- Configure lualine
 vim.opt.showmode = false
@@ -102,7 +100,7 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 require('lualine').setup({
      options = {
-          theme = 'ayu',
+          theme = 'vscode',
      },
      active = {
           left = {
@@ -129,26 +127,33 @@ vim.opt.numberwidth = 5
 vim.opt.relativenumber = true
 
 -- Add fixed width column for showing git line status information
-vim.opt.signcolumn = "yes:1"
+vim.opt.signcolumn = "yes:2"
 require('gitsigns').setup {
      signs = {
           add            = { text = '+' },
           change         = { text = '~' },
           delete         = { text = '-' },
-          topdelete      = { text = 'x' },
-          changedelete   = { text = 'x' },
+          topdelete      = { text = '-' },
+          changedelete   = { text = '-' },
           untracked      = { text = '!' },
      },
      signs_staged = {
-          add            = { text = '+' },
-          change         = { text = '~' },
-          delete         = { text = '-' },
-          topdelete      = { text = 'x' },
-          changedelete   = { text = 'x' },
+          add            = { text = '|' },
+          change         = { text = '|' },
+          delete         = { text = '|' },
+          topdelete      = { text = '-' },
+          changedelete   = { text = '-' },
           untracked      = { text = '!' },
      }
 
 }
+-- Override colorscheme gitsigns text colors
+vim.cmd[[highlight GitSignsAdd guifg=lightgreen]]
+vim.cmd[[highlight GitSignsChange guifg=cyan]]
+vim.cmd[[highlight GitSignsDelete guifg=red]]
+vim.cmd[[highlight GitSignsTopDelete guifg=red]]
+vim.cmd[[highlight GitSignsChangeDelete guifg=red]]
+vim.cmd[[highlight GitSignsUntracked guifg=gold]]
 
 -- incorporate system clipboard with neovim
 -- Install xclip for X11 window manager. To use, enter "+y to copy and "+p to paste from xclip clipboard
