@@ -30,6 +30,7 @@ Plug('lewis6991/gitsigns.nvim')
 
 -- LSP
 Plug('neovim/nvim-lspconfig')
+Plug('williamboman/mason-lspconfig.nvim')
 
 -- Treesitter
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate'})
@@ -41,6 +42,26 @@ vim.call('plug#end')
 
 -- call custom config files for plugins
 require("mason").setup()
+require("mason-lspconfig").setup {
+     ensure_installed = {
+          "lua_ls",
+          "quick_lint_js",
+          "marksman",
+          "cssls",
+          "clangd",
+          "bashls",
+          "html"
+     },
+}
+
+-- Require LSP for syntax highlighting
+require('lspconfig').quick_lint_js.setup{}
+require('lspconfig').lua_ls.setup{}
+require('lspconfig').marksman.setup{}
+require('lspconfig').cssls.setup{}
+require('lspconfig').clangd.setup{}
+require('lspconfig').bashls.setup{}
+require('lspconfig').html.setup{}
 
 -- Configure Nvim-Tree
 require('nvim-tree').setup ({
@@ -53,9 +74,6 @@ require('nvim-tree').setup ({
 local telescope = require('telescope')
 telescope.setup {}
 telescope.load_extension('fzf')
-
--- Require LSP for syntax highlighting
---require'lspconfig'.quick_lint_js.setup{}
 
 -- syntax highlighting
 --vim.opt.syntax = 'on'
