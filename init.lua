@@ -117,14 +117,23 @@ require('gitsigns').setup {
           add            = { text = '+' },
           change         = { text = '~' },
           delete         = { text = '-' },
-          topdelete      = { text = '`' },
-          changedelete   = { text = '_' },
+          topdelete      = { text = 'x' },
+          changedelete   = { text = 'x' },
+          untracked      = { text = '!' },
+     },
+     signs_staged = {
+          add            = { text = '+' },
+          change         = { text = '~' },
+          delete         = { text = '-' },
+          topdelete      = { text = 'x' },
+          changedelete   = { text = 'x' },
           untracked      = { text = '!' },
      }
+
 }
 
 -- incorporate system clipboard with neovim
--- Install xclip. To use, enter "+y to copy and "+p to paste from xclip clipboard
+-- Install xclip for X11 window manager. To use, enter "+y to copy and "+p to paste from xclip clipboard
 vim.opt.clipboard = "unnamedplus"
 
 -- Open Nvim Tree when starting Neovim
