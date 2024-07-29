@@ -19,9 +19,9 @@ The primary plugin manager used is [vim-plug](https://github.com/junegunn/vim-pl
 
 ### LSP/Linting/Formatting ###
 
-- [mason](https://github.com/williamboman/mason.nvim))
+- [mason](https://github.com/williamboman/mason.nvim)
 - [mason-lspconfig](https://github.com/williamboman/mason-lspconfig.nvim)
 
 ## Known Issues ##
 
-Telescope('fzf') seems to cause some issues when installed on a first environment (WSL).
+`telescope.load_extension('fzf')` seems to cause some issues when installed on a fresh environment (tested on WSL).
