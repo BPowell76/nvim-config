@@ -40,8 +40,19 @@ Plug('williamboman/mason.nvim')
 vim.call('plug#end')
 
 -- call custom config files for plugins
-require('user')
 require("mason").setup()
+
+-- Configure Nvim-Tree
+require('nvim-tree').setup ({
+     view = {
+          width = 50,
+     },
+})
+
+-- Configure telescope
+local telescope = require('telescope')
+telescope.setup {}
+telescope.load_extension('fzf')
 
 -- Require LSP for syntax highlighting
 --require'lspconfig'.quick_lint_js.setup{}
@@ -67,16 +78,23 @@ vim.opt.termguicolors = true
 --vim.cmd[[colorscheme flow]]
 vim.cmd[[colorscheme ayu-dark]]
 
-
+-- Configure lualine
 vim.opt.showmode = false
---require('lualine').setup()
---require('lualine').setup {
---     options = { theme = 'powerline' }
---}
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 require('lualine').setup({
      options = {
           theme = 'ayu',
      },
+     active = {
+          left = {
+               {'mode', 'past' },
+               {'gitbranch', 'filename','modified' }
+          }
+     },
+     component_function = {
+          gitbranch = 'fugitive#head'
+     }
 })
 
 -- set tab space width
@@ -101,7 +119,7 @@ require('gitsigns').setup {
           delete         = { text = '-' },
           topdelete      = { text = '`' },
           changedelete   = { text = '_' },
-          untracked      = { text = 'e621' },
+          untracked      = { text = '!' },
      }
 }
 
