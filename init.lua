@@ -37,6 +37,16 @@ Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate'})
 -- Install Mason.nvim
 Plug('williamboman/mason.nvim')
 
+-- Install linting
+Plug('mfussenegger/nvim-lint')
+
+-- Install autocomplete
+Plug('hrsh7th/nvim-cmp')
+Plug('hrsh7th/cmp-nvim-lsp')
+Plug('hrsh7th/cmp-buffer')
+Plug('hrsh7th/cmp-path')
+Plug('hrsh7th/cmp-cmdline')
+
 vim.call('plug#end')
 
 -- call custom config files for plugins
@@ -61,6 +71,35 @@ require('lspconfig').cssls.setup{}
 require('lspconfig').clangd.setup{}
 require('lspconfig').bashls.setup{}
 require('lspconfig').html.setup{}
+
+-- Linting
+require('lint')
+
+-- Configure autocomplete
+local cmp = require('cmp')
+cmp.setup({
+     snippet = {
+          expand = function(args)
+               vim.snippet.expand(args.body)
+          end,
+     },
+     window = {
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
+     },
+     mapping = cmp.mapping.preset.insert({
+          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<C-e>'] = cmp.mapping.abort(),
+          ['<CR>'] = cmp.mapping.confirm({ select = true }),
+     }),
+     sources = cmp.config.sources({
+          { name = 'nvim_lsp' },
+     }, {
+          { name = 'buffer' },
+     })
+})
 
 -- Configure Nvim-Tree
 require('nvim-tree').setup ({
