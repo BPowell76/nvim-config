@@ -2,6 +2,12 @@
 
 Put this together for my own use to use across machines at different locations. Sharing for anyone that wants to use it.
 
+## Neovim Installation Script ##
+
+The shell script `build-install-neovim.sh` allows for an automated installation process of various Neovim releases.
+You specify the release version of Neovim as found on the [repo's releases page](https://github.com/neovim/neovim/releases) to install and it builds from source the package.
+The script does not, however, verify the SHA256 Checksum of the tar file.
+
 ## Plugins ##
 
 ### Manager ###
