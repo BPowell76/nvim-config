@@ -5,8 +5,6 @@ vim.call('plug#begin')
 
 -- Telescope
 Plug('nvim-lua/plenary.nvim')
-Plug('nvim-telescope/telescope-fzf-native.nvim', { ['do'] = 'make'})
-Plug('nvim-telescope/telescope.nvim')
 
 -- ColorSchemes
 Plug('folke/tokyonight.nvim')
@@ -29,10 +27,6 @@ Plug('lewis6991/gitsigns.nvim')
 
 -- LSP
 Plug('neovim/nvim-lspconfig')
-Plug('williamboman/mason-lspconfig.nvim')
-
--- Treesitter
-Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate'})
 
 -- Install Mason.nvim
 Plug('williamboman/mason.nvim')
@@ -51,26 +45,12 @@ vim.call('plug#end')
 
 -- call custom config files for plugins
 require("mason").setup()
-require("mason-lspconfig").setup {
-     ensure_installed = {
-          "lua_ls",
-          "quick_lint_js",
-          "marksman",
-          "cssls",
-          "clangd",
-          "bashls",
-          "html"
-     },
-}
 
 -- Require LSP for syntax highlighting
-require('lspconfig').quick_lint_js.setup{}
-require('lspconfig').lua_ls.setup{}
-require('lspconfig').marksman.setup{}
-require('lspconfig').cssls.setup{}
-require('lspconfig').clangd.setup{}
-require('lspconfig').bashls.setup{}
-require('lspconfig').html.setup{}
+-- vim.lspconfig.config('quick_lint_js')
+-- vim.lspconfig.config('lua_ls')
+-- vim.lspconfig.config('marksman')
+-- vim.lspconfig.config('clangd')
 
 -- Linting
 require('lint')
@@ -109,20 +89,9 @@ require('nvim-tree').setup ({
 })
 
 -- Configure telescope
-local telescope = require('telescope')
-telescope.setup {}
-telescope.load_extension('fzf')
 
 -- syntax highlighting
 --vim.opt.syntax = 'on'
-require'nvim-treesitter.configs'.setup {
-     ensure_installed = { "javascript","lua","vim","markdown","markdown_inline","html","css","go","svelte" },
-     sync_install = false,
-     auto_install = true,
-     highlight = {
-          enable = true
-     }
-}
 
 -- enable 24-bit color
 vim.opt.termguicolors = true
@@ -199,4 +168,8 @@ vim.cmd[[highlight GitSignsUntracked guifg=gold]]
 vim.opt.clipboard = "unnamedplus"
 
 -- Open Nvim Tree when starting Neovim
-vim.cmd("NvimTreeOpen")
+vim.api.nvim_create_autocmd("VimEnter", {
+     callback = function()
+          vim.cmd("NvimTreeOpen")
+     end,
+})
