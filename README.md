@@ -5,6 +5,8 @@ Put this together for my own use to use across machines at different locations. 
 ## Neovim Installation Script ##
 
 The shell script `build-install-neovim.sh` allows for an automated installation of the latest stable neovim build.
+It also installs the latest version of **vim-plug**.
+This build script currently only works on Ubuntu and Debian and checks the operating system using the `hostnamectl` command.
 
 ## Plugins ##
 
