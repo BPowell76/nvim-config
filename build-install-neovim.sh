@@ -3,24 +3,27 @@
 #    compiles, and installs the newer version for Debian distros.
 #    Requires cmake
 
-read -p "Enter the Neovim version to download to download: v" nvimVersion
-echo -n "Downloading version $nvimVersion"
-cd "$HOME/Downloads/"
-curl -s -OL "https://github.com/neovim/neovim/archive/refs/tags/v$nvimVersion.tar.gz"
-echo "...Done"
+sudo apt update;
+sudo apt install -y ninja-build gettext cmake curl build-essential git;
 
-echo "Extracting Neovim v$nvimVersion"
-tar -xf "v$nvimVersion.tar.gz"
+echo "Building Neovim Latest Stable from Source"
+echo "-----------------------------------------"
 
-echo "Building Neovim v$nvimVersion Debian Package"
-cd "neovim-$nvimVersion"
+cd /tmp
+git clone https://github.com/neovim/neovim
+cd neovim
 
-make -s CMAKE_BUILD_TYPE=Release
-cd build  
+git checkout stable
+
+make CMAKE_BUILD_TYPE=RelWithDebInfo
+cd build
 cpack -G DEB
+sudo dpkg -i nvim-linux-x86_64.deb
 
-echo "Installing Neovim v$nvimVersion"
-sudo dpkg -i nvim-linux64.deb
+echo "Neovim build and install completed, cleaning up..."
 
-echo "Neovim v$nvimVersion has been installed"
-echo "Do not forget to use 'select-editor' and 'sudo select-editor' if you want to set nvim as your default editor"
+cd /tmp
+yes | rm -r neovim
+
+echo "Going back to user home directory"
+cd $XDG_HOME
