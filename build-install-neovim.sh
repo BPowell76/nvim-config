@@ -3,9 +3,9 @@
 #    compiles, and installs the newer version for Debian distros.
 #    Requires cmake
 
-OS=$(hostnamectl | grep "Operating System:" | ctu -w -f 3)
+OS=$(hostnamectl | grep "Operating System:" | cut -d ' ' -f 3)
 
-if [$OS = "Ubuntu" || $OS = "Debian"]; then
+if [[ $OS == "Ubuntu" || $OS == "Debian" ]]; then
      sudo apt update;
      sudo apt install -y ninja-build gettext cmake curl build-essential git;
 else
@@ -22,7 +22,7 @@ cd neovim
 
 git checkout stable
 
-if [$OS = "Ubuntu" || $OS = "Debian"]; then
+if [[ $OS == "Ubuntu" || $OS == "Debian" ]]; then
      make CMAKE_BUILD_TYPE=RelWithDebInfo
      cd build
      cpack -G DEB
